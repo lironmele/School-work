@@ -1,4 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using System;
 
 namespace Monopoly
 {
@@ -39,7 +45,8 @@ namespace Monopoly
 
         public static int RollDice(Random D)
         {
-            return D.Next(1, 7) + D.Next(1, 7);
+            int[] dice = {D.Next(1,7), D.Next(1, 7)};
+            return dice[0]+dice[1];
         }
 
         public static void MakeTurn(int player, int[] wallet, int[] Position, string[] gameBoard, string[] owner, int[] Penalty, int[] Price, string[] names)
@@ -90,7 +97,7 @@ namespace Monopoly
         }
 
         public static bool CheckDefeat(int[] wallet, string[] names)
-        { 
+        {
             for (int i = 0; i < wallet.Length; i++)
             {
                 if (wallet[i] < 1)
@@ -108,7 +115,7 @@ namespace Monopoly
             for (int i = 0; i < names.Length; i++)
             {
                 Console.WriteLine($"{names[i]}:");
-                Console.Write($"Wallet - {wallet[i]}. Penalty - {Penalty[i]}. Position - {Position[i]+1}. ");
+                Console.Write($"Wallet - {wallet[i]}. Penalty - {Penalty[i]}. Position - {Position[i] + 1}. ");
                 Console.Write("Ownes: ");
                 for (int j = 0; j < owner.Length; j++)
                 {
@@ -160,7 +167,7 @@ namespace Monopoly
             }
 
             // Main Game
-            int f = 0;
+            int f = 0; //current player
             while (CheckDefeat(wallet, names))
             {
                 Console.ReadKey();
@@ -171,7 +178,7 @@ namespace Monopoly
                 if (Penalty[f] > 0)
                 {
                     Penalty[f] -= 1;
-                    Console.WriteLine($"{names[f]} is in jail for {Penalty[f]+1} more turns!");
+                    Console.WriteLine($"{names[f]} is in jail for {Penalty[f] + 1} more turns!");
                     f++;
                     continue;
                 }
